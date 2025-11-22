@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Application Technicien</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="button_login">Log In</string>
+    <string name="welcome_message">Hello, %1$s %2$s!</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="button_1">Projects</string>
+    <string name="button_2">Tasks</string>
+    <string name="button_3">Settings</string>
+    <string name="button_4">Profile</string>
+
 </resources>
