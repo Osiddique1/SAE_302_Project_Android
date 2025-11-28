@@ -5,9 +5,9 @@
     <string name="button_login">Log In</string>
     <string name="welcome_message">Hello, %1$s %2$s!</string>
     <string name="dashboard_title">Dashboard</string>
-    <string name="button_1">Projects</string>
-    <string name="button_2">Tasks</string>
-    <string name="button_3">Settings</string>
-    <string name="button_4">Profile</string>
+    <string name="button_1">Visite Terrain</string>
+    <string name="button_2">Check List</string>
+    <string name="button_3">Photos</string>
+    <string name="button_4">Rapport</string>
 
 </resources>

@@ -28,8 +28,10 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="48dp"
-    app:boxCornerRadiusStart="8dp"
-    app:boxCornerRadiusEnd="8dp"
+    app:boxCornerRadiusTopStart="8dp"
+    app:boxCornerRadiusTopEnd="8dp"
+    app:boxCornerRadiusBottomStart="8dp"
+    app:boxCornerRadiusBottomEnd="8dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/text_app_title">
@@ -51,8 +53,10 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    app:boxCornerRadiusStart="8dp"
-    app:boxCornerRadiusEnd="8dp"
+    app:boxCornerRadiusTopStart="8dp"
+    app:boxCornerRadiusTopEnd="8dp"
+    app:boxCornerRadiusBottomStart="8dp"
+    app:boxCornerRadiusBottomEnd="8dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/input_layout_first_name">
@@ -81,20 +85,5 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/input_layout_last_name" />
-
-    <TextClock
-        android:id="@+id/textClock"
-        android:layout_width="72dp"
-        android:layout_height="27dp"
-        tools:layout_editor_absoluteX="204dp"
-        tools:layout_editor_absoluteY="3dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="71dp"
-        android:layout_height="77dp"
-        app:srcCompat="@drawable/icons8_technicien_48"
-        tools:layout_editor_absoluteX="196dp"
-        tools:layout_editor_absoluteY="91dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

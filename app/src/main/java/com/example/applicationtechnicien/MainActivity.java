@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 3. Create an Intent to navigate to the HomeActivity
-        /*Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
 
         // 4. Pass the entered names to the next Activity
         intent.putExtra(EXTRA_FIRST_NAME, firstName);
         intent.putExtra(EXTRA_LAST_NAME, lastName);
 
         // 5. Start the new Activity
-        startActivity(intent);*/
+        startActivity(intent);
     }
 }
