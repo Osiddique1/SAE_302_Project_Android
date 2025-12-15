@@ -2,6 +2,7 @@
     <string name="app_name">Application Technicien</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
+    <string name="project_title">Project Name</string>
     <string name="button_login">Log In</string>
     <string name="welcome_message">Hello, %1$s %2$s!</string>
     <string name="dashboard_title">Dashboard</string>
@@ -9,5 +10,9 @@
     <string name="button_2">Check List</string>
     <string name="button_3">Photos</string>
     <string name="button_4">Rapport</string>
+
+    <string name="photos_title">Photos</string>
+    <string name="action_take_photo">Prendre une nouvelle photo</string>
+    <string name="description_captured_photo">The photo captured by the camera.</string>
 
 </resources>

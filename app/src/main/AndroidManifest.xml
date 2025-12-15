@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <!-- File: app/src/main/AndroidManifest.xml -->
 
     <application
         android:allowBackup="true"
@@ -13,11 +18,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ApplicationTechnicien">
-        <activity
-            android:name=".HomeActivity"
-            android:exported="true"
-            android:theme="@style/App.Theme.NoActionBar" />
+        android:theme="@style/Theme.ApplicationTechnicien"
+        tools:targetApi="31">
+
+        <!-- Your existing MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -26,6 +30,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Your existing HomeActivity -->
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/App.Theme.NoActionBar" />
+
+        <!-- ADD THIS BLOCK FOR PHOTOACTIVITY -->
+        <activity
+            android:name=".PhotoActivity"
+            android:exported="false"
+            android:theme="@style/App.Theme.NoActionBar" />
+
     </application>
+
 
 </manifest>
