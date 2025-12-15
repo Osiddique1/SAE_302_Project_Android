@@ -13,4 +13,13 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-</resources>
+
+      <!-- ADD THIS NEW STYLE BLOCK -->
+    <style name="App.Theme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- You can add customizations for this specific theme here if needed.
+               For example, to set the status bar color:
+          <item name="android:statusBarColor">@color/your_color_here</item>
+          -->
+    </style>
+
+    </resources>
