@@ -1,36 +1,53 @@
 package com.example.applicationtechnicien;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class PhotoActivity extends AppCompatActivity {
 
-    // Request code to identify the camera intent result
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imageViewPhoto; // Declaration for the ImageView
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 101;
+    private ImageView imageViewPhoto;
+    private Uri imageUri; // This will hold the URI for the saved image
+
+    // This launcher will start the camera and wait for its result.
+    private final ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    // The photo was successfully saved to the imageUri.
+                    // Now, we just display it in our ImageView.
+                    imageViewPhoto.setImageURI(imageUri);
+                    Toast.makeText(this, "Photo saved to Gallery!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle the case where the user cancels the camera
+                    Toast.makeText(this, "Photo capture cancelled.", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_photo);
 
-        // --- View Initialization ---
-        imageViewPhoto = findViewById(R.id.image_view_photo); // Initialize ImageView
-
-        // --- Toolbar Setup ---
+        imageViewPhoto = findViewById(R.id.image_view_photo);
         Toolbar toolbar = findViewById(R.id.toolbar_photo);
         setSupportActionBar(toolbar);
 
@@ -39,54 +56,68 @@ public class PhotoActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.photos_title);
         }
 
-        // --- Button Click Listener (Take Photo) ---
         CardView takePictureButton = findViewById(R.id.card_take_photo);
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent();
-            }
-        });
+        takePictureButton.setOnClickListener(v -> checkCameraPermissionAndOpenCamera());
     }
 
-    // Opens the device's camera app
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        // Check if there is an app that can handle this intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    private void checkCameraPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            // Permission is granted, proceed to open the camera.
+            openCamera();
         } else {
-            Toast.makeText(this, "Camera not available.", Toast.LENGTH_SHORT).show();
+            // Permission is not granted, request it.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
         }
     }
 
-    /**
-     * Handles the result returned from the camera activity.
-     */
+    private void openCamera() {
+        // First, create a URI where the camera will save the photo.
+        imageUri = createImageUri();
+        if (imageUri == null) {
+            Toast.makeText(this, "Failed to create image file.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create an intent to open the camera.
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // IMPORTANT: Tell the camera where to save the full-resolution photo.
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+        // Launch the camera.
+        cameraLauncher.launch(takePictureIntent);
+    }
+
+    // This method creates an entry in the public gallery and returns its URI.
+    private Uri createImageUri() {
+        ContentValues values = new ContentValues();
+        // Create a unique file name using the current time
+        String fileName = "IMG_" + System.currentTimeMillis() + ".jpg";
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+        // Tell the system to save it in the public "Pictures" directory.
+        // On modern Android (10+), this also puts it in a sub-folder for your app.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/ApplicationTechnicien");
+        }
+
+        // Use ContentResolver to insert the new image entry and get its URI.
+        return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Check if the result is from our camera request and was successful
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-
-            // Get the thumbnail bitmap provided by the camera intent
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            // Set the bitmap to the ImageView
-            imageViewPhoto.setImageBitmap(imageBitmap);
-
-            // NOTE: This approach only provides a small thumbnail.
-            // For a full-resolution photo saved to the phone, you would need
-            // to specify a file path using a FileProvider before starting the camera intent.
-
-            Toast.makeText(this, "Photo captured successfully!", Toast.LENGTH_SHORT).show();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // User granted permission, now open the camera.
+                openCamera();
+            } else {
+                Toast.makeText(this, "Camera permission is required.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    // Handles the back button in the toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

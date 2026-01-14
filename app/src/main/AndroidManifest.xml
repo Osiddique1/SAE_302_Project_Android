@@ -8,8 +8,6 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <!-- File: app/src/main/AndroidManifest.xml -->
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,7 +19,6 @@
         android:theme="@style/Theme.ApplicationTechnicien"
         tools:targetApi="31">
 
-        <!-- Your existing MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -31,18 +28,14 @@
             </intent-filter>
         </activity>
 
-        <!-- Your existing HomeActivity -->
         <activity
             android:name=".HomeActivity"
             android:theme="@style/App.Theme.NoActionBar" />
 
-        <!-- ADD THIS BLOCK FOR PHOTOACTIVITY -->
         <activity
             android:name=".PhotoActivity"
             android:exported="false"
             android:theme="@style/App.Theme.NoActionBar" />
 
     </application>
-
-
 </manifest>
