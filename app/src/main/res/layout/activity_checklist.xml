@@ -120,8 +120,8 @@
         android:minLines="0"
         android:textColor="#070707"
         android:textColorHint="#050505"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="578dp" />
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="598dp" />
 
     <TextView
         android:id="@+id/textView9"
