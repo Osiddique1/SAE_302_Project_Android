@@ -19,9 +19,14 @@
         android:theme="@style/Theme.ApplicationTechnicien"
         tools:targetApi="31">
         <activity
-            android:name=".checklistActivity"
+            android:name=".terrain"
             android:exported="false" />
-        <!-- Your existing MainActivity -->
+        <activity
+            android:name=".rapportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".checklistActivity"
+            android:exported="false" /> <!-- Your existing MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
