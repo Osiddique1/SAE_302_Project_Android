@@ -121,7 +121,7 @@
         android:textColor="#070707"
         android:textColorHint="#050505"
         tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="598dp" />
+        tools:layout_editor_absoluteY="596dp" />
 
     <TextView
         android:id="@+id/textView9"
