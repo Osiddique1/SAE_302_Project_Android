@@ -96,7 +96,7 @@
         android:maxLines="10"
         android:minLines="0"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="581dp" />
+        tools:layout_editor_absoluteY="605dp" />
 
     <TextView
         android:id="@+id/textView9"
