@@ -56,24 +56,32 @@ public class HomeActivity extends AppCompatActivity {
             userNameTextView.setText(welcomeMessage);
         }
 
-        // ==============================================
-        // 🚀 NEW CODE TO START PHOTOACTIVITY
-        // ==============================================
-
-        // 1. Find the CardView for 'Photos' (R.id.card_button_3)
+        // --- Click listener for Photos button ---
         CardView photosButton = findViewById(R.id.card_button_3);
-
-        // 2. Set the OnClickListener
         photosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 3. Create an Intent to start PhotoActivity
                 Intent photoIntent = new Intent(HomeActivity.this, PhotoActivity.class);
-                // 4. Start the new activity
                 startActivity(photoIntent);
             }
         });
 
+        // ==============================================
+        // 🚀 NEW CODE TO START CHECKLIST ACTIVITY
+        // ==============================================
+
+        // 1. Find the CardView for 'Checklist' (using its ID from your XML)
+        CardView checklistButton = findViewById(R.id.card_button_2);
+
+        // 2. Set the OnClickListener
+        checklistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 3. Create an Intent to start ChecklistActivity
+                Intent intent = new Intent(HomeActivity.this, ChecklistActivity.class);
+                startActivity(intent);
+            }
+        });
         // ==============================================
     }
 
@@ -83,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         // android.R.id.home is the ID for the back button in the ActionBar
         if (item.getItemId() == android.R.id.home) {
             // This will simulate the user pressing the physical back button
-            onBackPressed();
+            getOnBackPressedDispatcher().onBackPressed(); // Use modern back press
             return true;
         }
         return super.onOptionsItemSelected(item);
