@@ -5,13 +5,26 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBF7F7"
     tools:context=".checklistActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+        app:titleTextColor="@android:color/white" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Alimentation électrique sécurisée"
+        android:textColor="#101010"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="192dp" />
 
@@ -20,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#070707"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="140dp" />
 
@@ -28,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#020202"
         tools:layout_editor_absoluteX="298dp"
         tools:layout_editor_absoluteY="173dp" />
 
@@ -36,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#0F0E0E"
         tools:layout_editor_absoluteX="298dp"
         tools:layout_editor_absoluteY="140dp" />
 
@@ -44,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#121212"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="173dp" />
 
@@ -52,6 +69,7 @@
         android:layout_width="221dp"
         android:layout_height="23dp"
         android:text="Câblage à l'intérieur bien rangé"
+        android:textColor="#090909"
         tools:layout_editor_absoluteX="15dp"
         tools:layout_editor_absoluteY="157dp" />
 
@@ -60,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#121111"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="108dp" />
 
@@ -68,6 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Armoire Réseau :"
+        android:textColor="#0D0C0C"
         tools:layout_editor_absoluteX="15dp"
         tools:layout_editor_absoluteY="80dp" />
 
@@ -76,6 +96,7 @@
         android:layout_width="152dp"
         android:layout_height="20dp"
         android:text="Propreté et état général de l'armoire"
+        android:textColor="#070707"
         tools:layout_editor_absoluteX="15dp"
         tools:layout_editor_absoluteY="121dp" />
 
@@ -84,6 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#101010"
         tools:layout_editor_absoluteX="298dp"
         tools:layout_editor_absoluteY="109dp" />
 
@@ -91,18 +113,22 @@
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="409dp"
         android:layout_height="93dp"
+        android:backgroundTint="#070707"
         android:hint="Écrivez votre commentaire pour les points à revoir"
         android:inputType="textMultiLine"
         android:maxLines="10"
         android:minLines="0"
+        android:textColor="#070707"
+        android:textColorHint="#050505"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="605dp" />
+        tools:layout_editor_absoluteY="578dp" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Brassage :"
+        android:textColor="#0D0C0C"
         tools:layout_editor_absoluteX="22dp"
         tools:layout_editor_absoluteY="258dp" />
 
@@ -111,6 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Panneaux de brassage étiquetés"
+        android:textColor="#0B0B0B"
         tools:layout_editor_absoluteX="23dp"
         tools:layout_editor_absoluteY="298dp" />
 
@@ -119,6 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Conformité du type de câble"
+        android:textColor="#0B0A0A"
         tools:layout_editor_absoluteX="23dp"
         tools:layout_editor_absoluteY="338dp" />
 
@@ -127,6 +155,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Documentation de brassage à jour."
+        android:textColor="#090909"
         tools:layout_editor_absoluteX="25dp"
         tools:layout_editor_absoluteY="378dp" />
 
@@ -135,6 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#050505"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="290dp" />
 
@@ -143,6 +173,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#0B0B0B"
         tools:layout_editor_absoluteX="298dp"
         tools:layout_editor_absoluteY="290dp" />
 
@@ -151,6 +182,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#090909"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="330dp" />
 
@@ -159,6 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#0F0E0E"
         tools:layout_editor_absoluteX="298dp"
         tools:layout_editor_absoluteY="330dp" />
 
@@ -167,6 +200,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#070707"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="365dp" />
 
@@ -175,6 +209,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#070707"
         tools:layout_editor_absoluteX="298dp"
         tools:layout_editor_absoluteY="365dp" />
 
@@ -183,6 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Énergie (Alimentation);"
+        android:textColor="#0B0B0B"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="443dp" />
 
@@ -190,6 +226,7 @@
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#090909"
         tools:layout_editor_absoluteX="15dp"
         tools:layout_editor_absoluteY="475dp"
         tools:text="Mise à la terre (masse) vérifiée" />
@@ -199,6 +236,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="État des prises électriques"
+        android:textColor="#050505"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="504dp" />
 
@@ -207,6 +245,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#050505"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="456dp" />
 
@@ -215,6 +254,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#070707"
         tools:layout_editor_absoluteX="300dp"
         tools:layout_editor_absoluteY="456dp" />
 
@@ -223,6 +263,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:textColor="#0B0B0B"
         tools:layout_editor_absoluteX="247dp"
         tools:layout_editor_absoluteY="494dp" />
 
@@ -231,6 +272,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A revoir"
+        android:textColor="#050505"
         tools:layout_editor_absoluteX="299dp"
         tools:layout_editor_absoluteY="494dp" />
 
