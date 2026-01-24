@@ -12,13 +12,13 @@
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:title="@string/dashboard_title"
-        app:titleTextColor="@android:color/white"
-        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+        app:title="@string/dashboard_title"
+        app:titleTextColor="@android:color/white" />
 
     <!-- Note: You need to add a vector asset named 'ic_arrow_back_white_24dp' to your drawables. -->
     <!-- In Android Studio: Right-click res/drawable -> New -> Vector Asset -> Select 'arrow_back'. -->
