@@ -50,7 +50,6 @@ public class HomeActivity extends AppCompatActivity {
         terrainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Fixed: Make sure both names are photoIntent
                 Intent terrainIntent = new Intent(HomeActivity.this, terrain.class);
                 startActivity(terrainIntent);
             }
@@ -77,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // --- BUTTON 4: Rapport ---
-        CardView rapportButton = findViewById(R.id.card_button_3);
+        CardView rapportButton = findViewById(R.id.card_button_4);
         rapportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
