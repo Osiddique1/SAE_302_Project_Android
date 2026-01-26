@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -18,34 +20,53 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApplicationTechnicien"
         tools:targetApi="31">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".terrain"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".HomeActivity" />
+
         <activity
             android:name=".rapportActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".HomeActivity" />
+
         <activity
             android:name=".ChecklistActivity"
             android:exported="true"
-            android:theme="@style/App.Theme.NoActionBar" />
+            android:theme="@style/App.Theme.NoActionBar"
+            android:parentActivityName=".HomeActivity" />
 
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Your existing HomeActivity -->
+        </activity>
+
         <activity
             android:name=".HomeActivity"
             android:exported="true"
-            android:theme="@style/App.Theme.NoActionBar" /> <!-- ADD THIS BLOCK FOR PHOTOACTIVITY -->
+            android:theme="@style/App.Theme.NoActionBar" />
+
         <activity
             android:name=".PhotoActivity"
             android:exported="false"
-            android:theme="@style/App.Theme.NoActionBar" />
+            android:theme="@style/App.Theme.NoActionBar"
+            android:parentActivityName=".HomeActivity" />
+
     </application>
 
 </manifest>

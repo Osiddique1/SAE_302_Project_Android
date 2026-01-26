@@ -1,98 +1,104 @@
 package com.example.applicationtechnicien;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.MenuItem; // Added for back button
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar; // Added
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class PhotoActivity extends AppCompatActivity {
 
-    // Request code to identify the camera intent result
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imageViewPhoto; // Declaration for the ImageView
+    private static final int CAMERA_PERMISSION_CODE = 1000;
+    private static final int IMAGE_CAPTURE_CODE = 1001;
+
+    private ImageView imageView;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_photo);
 
-        // --- View Initialization ---
-        imageViewPhoto = findViewById(R.id.image_view_photo); // Initialize ImageView
-
-        // --- Toolbar Setup ---
+        // --- 1. Setup Toolbar with Back Arrow ---
         Toolbar toolbar = findViewById(R.id.toolbar_photo);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.photos_title);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
         }
 
-        // --- Button Click Listener (Take Photo) ---
-        CardView takePictureButton = findViewById(R.id.card_take_photo);
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent();
+        imageView = findViewById(R.id.image_view_photo);
+        CardView btnCamera = findViewById(R.id.card_take_photo);
+
+        btnCamera.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                    String[] permission = {Manifest.permission.CAMERA};
+                    ActivityCompat.requestPermissions(this, permission, CAMERA_PERMISSION_CODE);
+                } else {
+                    openCamera();
+                }
+            } else {
+                openCamera();
             }
         });
     }
 
-    // Opens the device's camera app
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        // Check if there is an app that can handle this intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } else {
-            Toast.makeText(this, "Camera not available.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Handles the result returned from the camera activity.
-     */
+    // --- 2. Handle Click on the Back Arrow ---
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Check if the result is from our camera request and was successful
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-
-            // Get the thumbnail bitmap provided by the camera intent
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            // Set the bitmap to the ImageView
-            imageViewPhoto.setImageBitmap(imageBitmap);
-
-            // NOTE: This approach only provides a small thumbnail.
-            // For a full-resolution photo saved to the phone, you would need
-            // to specify a file path using a FileProvider before starting the camera intent.
-
-            Toast.makeText(this, "Photo captured successfully!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Handles the back button in the toolbar
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Nouvelle Photo");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Prise depuis l'application Technicien");
+
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, IMAGE_CAPTURE_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                Toast.makeText(this, "Permission refusée...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            imageView.setImageURI(imageUri);
+            Toast.makeText(this, "Photo enregistrée dans la Galerie !", Toast.LENGTH_SHORT).show();
+        }
     }
 }

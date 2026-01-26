@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
             app:title="Génération du Rapport"
             app:titleTextColor="@android:color/white" />
 

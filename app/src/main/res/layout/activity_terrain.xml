@@ -13,10 +13,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/purple_500"
+        app:title="Visit Terrain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
         app:titleTextColor="@android:color/white" />
 
     <!-- Contenu scrollable -->

@@ -20,43 +20,53 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        // --- Correct Toolbar and ActionBar Setup ---
+        // 1. Toolbar Setup
         Toolbar toolbar = findViewById(R.id.toolbar_home);
         setSupportActionBar(toolbar);
 
-        // Get the Intent that started this activity
         Intent intent = getIntent();
-
-        // Extract the data from the Intent extras
         String firstName = intent.getStringExtra(MainActivity.EXTRA_FIRST_NAME);
         String lastName = intent.getStringExtra(MainActivity.EXTRA_LAST_NAME);
-        // NOUVEAU: Récupérer le titre du projet
         String projectTitle = intent.getStringExtra(MainActivity.EXTRA_PROJECT_TITLE);
 
-        // --- DÉFINIR LE TITRE DE LA BARRE D'OUTILS AVEC LE TITRE DU PROJET ---
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show back button
-
-            // Si le titre du projet existe, utilisez-le comme titre de la Toolbar
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             if (projectTitle != null && !projectTitle.isEmpty()) {
-                getSupportActionBar().setTitle(projectTitle); // Définir le titre
-                getSupportActionBar().setDisplayShowTitleEnabled(true); // Afficher le titre
+                getSupportActionBar().setTitle(projectTitle);
             } else {
-                // Sinon, revenez à l'ancienne méthode (Dashboard, ou pas de titre)
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             }
         }
 
-        // Find the TextView for the user's name
+        // 2. Welcome Message
         TextView userNameTextView = findViewById(R.id.text_welcome);
-
-        // Set the user's name in the TextView
         if (firstName != null && lastName != null) {
             String welcomeMessage = getString(R.string.welcome_message, firstName, lastName);
             userNameTextView.setText(welcomeMessage);
         }
 
-        // --- Click listener for Photos button ---
+        // --- BUTTON 1: TERRAIN ---
+        CardView terrainButton = findViewById(R.id.card_button_1);
+        terrainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Fixed: Make sure both names are photoIntent
+                Intent terrainIntent = new Intent(HomeActivity.this, terrain.class);
+                startActivity(terrainIntent);
+            }
+        });
+
+        // --- BUTTON 2: CHECKLIST ---
+        CardView checklistButton = findViewById(R.id.card_button_2);
+        checklistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent checklistIntent = new Intent(HomeActivity.this, ChecklistActivity.class);
+                startActivity(checklistIntent);
+            }
+        });
+
+        // --- BUTTON 3: PHOTOS ---
         CardView photosButton = findViewById(R.id.card_button_3);
         photosButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,32 +76,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // ==============================================
-        // 🚀 NEW CODE TO START CHECKLIST ACTIVITY
-        // ==============================================
+    } // <--- ALL buttons must be ABOVE this bracket
 
-        // 1. Find the CardView for 'Checklist' (using its ID from your XML)
-        CardView checklistButton = findViewById(R.id.card_button_2);
-
-        // 2. Set the OnClickListener
-        checklistButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 3. Create an Intent to start ChecklistActivity
-                Intent intent = new Intent(HomeActivity.this, ChecklistActivity.class);
-                startActivity(intent);
-            }
-        });
-        // ==============================================
-    }
-
-    // This method handles clicks on action bar items, including the back button (home)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // android.R.id.home is the ID for the back button in the ActionBar
         if (item.getItemId() == android.R.id.home) {
-            // This will simulate the user pressing the physical back button
-            getOnBackPressedDispatcher().onBackPressed(); // Use modern back press
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
