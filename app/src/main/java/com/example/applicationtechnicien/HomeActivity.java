@@ -76,6 +76,16 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // --- BUTTON 4: Rapport ---
+        CardView rapportButton = findViewById(R.id.card_button_3);
+        rapportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent rapportIntent = new Intent(HomeActivity.this, rapportActivity.class);
+                startActivity(rapportIntent);
+            }
+        });
+
     } // <--- ALL buttons must be ABOVE this bracket
 
     @Override
