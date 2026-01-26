@@ -45,7 +45,6 @@
         <activity
             android:name=".ChecklistActivity"
             android:exported="true"
-
             android:parentActivityName=".HomeActivity" />
 
         <activity

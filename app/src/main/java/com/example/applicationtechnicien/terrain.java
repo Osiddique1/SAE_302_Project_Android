@@ -1,5 +1,7 @@
 package com.example.applicationtechnicien;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class terrain extends AppCompatActivity {
 
     private TextInputEditText etLieu, etAdresse, etDate, etHeure, etCommentaire;
@@ -31,29 +36,24 @@ public class terrain extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_terrain);
 
-        // 1. Gestion de l'affichage (Barres système)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // 2. Toolbar (Fonctionne maintenant avec le thème NoActionBar)
         Toolbar toolbar = findViewById(R.id.toolbar_photo);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // 3. Initialisation des vues
         initViews();
+        setupPickers(); // Logic for Date and Time
 
-        // 4. Chargement des données sauvegardées
         prefs = getSharedPreferences("TerrainPrefs", Context.MODE_PRIVATE);
         loadData();
 
-        // 5. Activation et clic du bouton
-        btnSave.setEnabled(true);
         btnSave.setOnClickListener(v -> saveData());
     }
 
@@ -65,6 +65,38 @@ public class terrain extends AppCompatActivity {
         etCommentaire = findViewById(R.id.etCommentaire);
         cbProbleme = findViewById(R.id.cbProbleme);
         btnSave = findViewById(R.id.btnNouveauRdv);
+    }
+
+    private void setupPickers() {
+        // Date Picker logic for dd-mm-yyyy
+        etDate.setOnClickListener(v -> {
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, year1, monthOfYear, dayOfMonth) -> {
+                        // Format: dd-mm-yyyy
+                        String selectedDate = String.format(Locale.getDefault(), "%02d-%02d-%04d", dayOfMonth, (monthOfYear + 1), year1);
+                        etDate.setText(selectedDate);
+                    }, year, month, day);
+            datePickerDialog.show();
+        });
+
+        // Time Picker logic
+        etHeure.setOnClickListener(v -> {
+            Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                    (view, hourOfDay, minute1) -> {
+                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1);
+                        etHeure.setText(selectedTime);
+                    }, hour, minute, true);
+            timePickerDialog.show();
+        });
     }
 
     private void saveData() {
@@ -92,7 +124,7 @@ public class terrain extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish(); // Ferme l'activité et retourne au menu
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

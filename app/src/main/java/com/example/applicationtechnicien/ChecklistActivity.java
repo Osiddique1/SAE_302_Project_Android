@@ -13,7 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class ChecklistActivity extends AppCompatActivity {
 
-    // Unique name for our "notebook"
     private static final String PREFS_NAME = "ChecklistPrefs";
     private EditText commentEdit;
 
@@ -24,14 +23,14 @@ public class ChecklistActivity extends AppCompatActivity {
 
         commentEdit = findViewById(R.id.comment_edittext);
 
-        // 1. Setup Toolbar
+        // --- TA TOOLBAR RÉINTÉGRÉE ---
         Toolbar toolbar = findViewById(R.id.toolbar_checklist);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // 2. Setup Checkbox Logic
+        // Configuration des groupes d'exclusion
         setupCheckboxGroup(R.id.check_cleanliness_ok, R.id.check_cleanliness_revoir);
         setupCheckboxGroup(R.id.check_cabling_ok, R.id.check_cabling_revoir);
         setupCheckboxGroup(R.id.check_power_ok, R.id.check_power_revoir);
@@ -41,55 +40,54 @@ public class ChecklistActivity extends AppCompatActivity {
         setupCheckboxGroup(R.id.check_grounding_ok, R.id.check_grounding_revoir);
         setupCheckboxGroup(R.id.check_outlets_ok, R.id.check_outlets_revoir);
 
-        // 3. Load previously saved data (if any)
-        loadSavedData();
-
-        // 4. Save button logic
-        // (Make sure you added android:id="@+id/btn_save" to your XML button!)
         if (findViewById(R.id.btn_save) != null) {
             findViewById(R.id.btn_save).setOnClickListener(v -> saveToPhone());
+        }
+
+        if (findViewById(R.id.btn_reset) != null) {
+            findViewById(R.id.btn_reset).setOnClickListener(v -> {
+                getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit().clear().apply();
+                recreate();
+            });
         }
     }
 
     private void saveToPhone() {
-        SharedPreferences sharedPref = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
 
-        // Save Checkbox states (Checked or Not)
-        editor.putBoolean("clean_ok", ((CheckBox)findViewById(R.id.check_cleanliness_ok)).isChecked());
-        editor.putBoolean("clean_rev", ((CheckBox)findViewById(R.id.check_cleanliness_revoir)).isChecked());
+        // Sauvegarde précise pour le rapport
+        saveItem(editor, "clean", R.id.check_cleanliness_ok, R.id.check_cleanliness_revoir);
+        saveItem(editor, "cable", R.id.check_cabling_ok, R.id.check_cabling_revoir);
+        saveItem(editor, "power", R.id.check_power_ok, R.id.check_power_revoir);
+        saveItem(editor, "panels", R.id.check_panels_ok, R.id.check_panels_revoir);
+        saveItem(editor, "type", R.id.check_cable_type_ok, R.id.check_cable_type_revoir);
+        saveItem(editor, "docs", R.id.check_docs_ok, R.id.check_docs_revoir);
+        saveItem(editor, "ground", R.id.check_grounding_ok, R.id.check_grounding_revoir);
+        saveItem(editor, "outlets", R.id.check_outlets_ok, R.id.check_outlets_revoir);
 
-        // Save Comment
         editor.putString("comment", commentEdit.getText().toString());
-
-        editor.apply(); // This saves the data!
+        editor.apply();
         Toast.makeText(this, "Sauvegardé !", Toast.LENGTH_SHORT).show();
     }
 
-    private void loadSavedData() {
-        SharedPreferences sharedPref = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
-        // Restore Checkbox states
-        ((CheckBox)findViewById(R.id.check_cleanliness_ok)).setChecked(sharedPref.getBoolean("clean_ok", false));
-        ((CheckBox)findViewById(R.id.check_cleanliness_revoir)).setChecked(sharedPref.getBoolean("clean_rev", false));
-
-        // Restore Comment
-        commentEdit.setText(sharedPref.getString("comment", ""));
+    private void saveItem(SharedPreferences.Editor editor, String key, int okId, int revId) {
+        editor.putBoolean(key + "_ok", ((CheckBox)findViewById(okId)).isChecked());
+        editor.putBoolean(key + "_rev", ((CheckBox)findViewById(revId)).isChecked());
     }
 
     private void setupCheckboxGroup(int okId, int revoirId) {
         CheckBox ok = findViewById(okId);
         CheckBox rev = findViewById(revoirId);
-        if (ok == null || rev == null) return;
-
-        ok.setOnCheckedChangeListener((b, isChecked) -> { if (isChecked) rev.setChecked(false); });
-        rev.setOnCheckedChangeListener((b, isChecked) -> { if (isChecked) ok.setChecked(false); });
+        if (ok != null && rev != null) {
+            ok.setOnCheckedChangeListener((b, isChecked) -> { if (isChecked) rev.setChecked(false); });
+            rev.setOnCheckedChangeListener((b, isChecked) -> { if (isChecked) ok.setChecked(false); });
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            getOnBackPressedDispatcher().onBackPressed();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
