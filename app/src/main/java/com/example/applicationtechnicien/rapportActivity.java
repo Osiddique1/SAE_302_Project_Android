@@ -88,9 +88,32 @@ public class rapportActivity extends AppCompatActivity {
         currentY += 60;
 
         // --- INFOS TERRAIN ---
-        paint.setTextSize(14f); paint.setFakeBoldText(false);
-        canvas.drawText("Lieu : " + pTerrain.getString("lieu", "N/A"), 50, currentY, paint);
-        currentY += 30;
+        paint.setTextSize(14f);
+        paint.setFakeBoldText(true);
+        canvas.drawText("INFORMATIONS DU TERRAIN", 50, currentY, paint);
+        paint.setFakeBoldText(false);
+        currentY += 25;
+
+        // Récupération de toutes les données de TerrainPrefs
+        String lieu = pTerrain.getString("lieu", "N/A");
+        String adresse = pTerrain.getString("adresse", "N/A");
+        String date = pTerrain.getString("date", "N/A");
+        String heure = pTerrain.getString("heure", "N/A");
+        boolean aProbleme = pTerrain.getBoolean("probleme", false);
+        String commTerrain = pTerrain.getString("commentaire", "Aucun");
+
+        // Affichage ligne par ligne
+        canvas.drawText("Lieu : " + lieu, 50, currentY, paint);
+        currentY += 20;
+        canvas.drawText("Adresse : " + adresse, 50, currentY, paint);
+        currentY += 20;
+        canvas.drawText("Date : " + date + " à " + heure, 50, currentY, paint);
+        currentY += 20;
+        canvas.drawText("Problème signalé : " + (aProbleme ? "OUI" : "NON"), 50, currentY, paint);
+        currentY += 20;
+        canvas.drawText("Note terrain : " + commTerrain, 50, currentY, paint);
+
+        currentY += 30; // Espace avant la section Checklist
 
         // --- SECTION CHECKLIST ---
         paint.setFakeBoldText(true);
