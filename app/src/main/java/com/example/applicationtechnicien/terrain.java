@@ -27,7 +27,7 @@ public class terrain extends AppCompatActivity {
 
     private TextInputEditText etLieu, etAdresse, etDate, etHeure, etCommentaire;
     private CheckBox cbProbleme;
-    private Button btnSave;
+    private Button btnSave, btnReset; // Ajout btnReset
     private SharedPreferences prefs;
 
     @Override
@@ -49,12 +49,15 @@ public class terrain extends AppCompatActivity {
         }
 
         initViews();
-        setupPickers(); // Logic for Date and Time
+        setupPickers();
 
         prefs = getSharedPreferences("TerrainPrefs", Context.MODE_PRIVATE);
         loadData();
 
         btnSave.setOnClickListener(v -> saveData());
+
+        // Listener pour le bouton Reset
+        btnReset.setOnClickListener(v -> resetData());
     }
 
     private void initViews() {
@@ -65,10 +68,10 @@ public class terrain extends AppCompatActivity {
         etCommentaire = findViewById(R.id.etCommentaire);
         cbProbleme = findViewById(R.id.cbProbleme);
         btnSave = findViewById(R.id.btnNouveauRdv);
+        btnReset = findViewById(R.id.btnResetTerrain); // Initialisation
     }
 
     private void setupPickers() {
-        // Date Picker logic for dd-mm-yyyy
         etDate.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
@@ -77,14 +80,12 @@ public class terrain extends AppCompatActivity {
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     (view, year1, monthOfYear, dayOfMonth) -> {
-                        // Format: dd-mm-yyyy
                         String selectedDate = String.format(Locale.getDefault(), "%02d-%02d-%04d", dayOfMonth, (monthOfYear + 1), year1);
                         etDate.setText(selectedDate);
                     }, year, month, day);
             datePickerDialog.show();
         });
 
-        // Time Picker logic
         etHeure.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -119,6 +120,17 @@ public class terrain extends AppCompatActivity {
         etHeure.setText(prefs.getString("heure", ""));
         etCommentaire.setText(prefs.getString("commentaire", ""));
         cbProbleme.setChecked(prefs.getBoolean("probleme", false));
+    }
+
+    private void resetData() {
+        etLieu.setText("");
+        etAdresse.setText("");
+        etDate.setText("");
+        etHeure.setText("");
+        etCommentaire.setText("");
+        cbProbleme.setChecked(false);
+        prefs.edit().clear().apply();
+        Toast.makeText(this, "Données réinitialisées", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -112,6 +112,15 @@
                 android:text="Enregistrer"
                 android:layout_marginTop="20dp" />
 
+            <Button
+                android:id="@+id/btnResetTerrain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Réinitialiser"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
