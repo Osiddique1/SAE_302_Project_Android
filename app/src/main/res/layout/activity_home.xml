@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f0eeeb"
     tools:context=".HomeActivity">
 
     <!-- Toolbar for the Back Arrow and Title -->
@@ -82,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/button_1"
-                    android:textColor="#333333"
+                    android:textColor="#0d0d0d"
                     android:layout_marginTop="8dp"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -113,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/button_2"
-                    android:textColor="#333333"
+                    android:textColor="#0d0d0d"
                     android:layout_marginTop="8dp"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -144,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/button_3"
-                    android:textColor="#333333"
+                    android:textColor="#0d0d0d"
                     android:layout_marginTop="8dp"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -175,7 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/button_4"
-                    android:textColor="#333333"
+                    android:textColor="#0d0d0d"
                     android:layout_marginTop="8dp"
                     android:textSize="18sp" />
             </LinearLayout>
