@@ -158,7 +158,7 @@ public class rapportActivity extends AppCompatActivity {
                 // Conversion de l'URI en Bitmap (image numérique)
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
                 // Redimensionnement pour s'assurer que la photo ne dépasse pas de la page
-                Bitmap scaledBmp = Bitmap.createScaledBitmap(bmp, 300, 225, false);
+                Bitmap scaledBmp = Bitmap.createScaledBitmap(bmp, 400, 250, false);
                 canvas.drawBitmap(scaledBmp, 140, currentY, paint);
             } catch (IOException e) {
                 e.printStackTrace();

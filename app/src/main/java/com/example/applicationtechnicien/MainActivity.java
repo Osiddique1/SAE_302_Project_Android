@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText projectTitleEditText;
     private Button loginButton;
 
+
     // Définition des clés constantes pour le transfert de données entre activités.
     // Utiliser le nom du package garantit que la clé est unique dans tout le système Android.
     public static final String EXTRA_FIRST_NAME = "com.example.applicationtechnicien.FIRST_NAME";

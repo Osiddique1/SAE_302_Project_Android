@@ -70,9 +70,7 @@ public class PhotoActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Gère l'appui sur la flèche de retour.
-     */
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
